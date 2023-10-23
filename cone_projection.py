@@ -132,7 +132,7 @@ class soc_3dim(nn.Module):
         x_reshape = x_reshape.contiguous().view(x_reshape.size(0), int(x_reshape.size(1) / self.input_dimension), self.input_dimension)
 
         s = 1 / np.sqrt(self.input_dimension) * torch.sum(x_reshape, dim=2)
-        y = x_reshape - s.unsqueeze(self.input_dimension).repeat(1, 1, self.input_dimension) / np.sqrt(self.input_dimension)
+        y = x_reshape - s.unsqueeze(2).repeat(1, 1, self.input_dimension) / np.sqrt(self.input_dimension)
 
         angle_tan = self.angle_tan + 1.19
         y_norm = torch.linalg.norm(y, self.input_dimension, dim=2)
@@ -171,7 +171,7 @@ class soc_3dim_leaky(nn.Module):
         x_reshape = x_reshape.contiguous().view(x_reshape.size(0), int(x_reshape.size(1) / self.input_dimension), self.input_dimension)
 
         s = 1 / np.sqrt(self.input_dimension) * torch.sum(x_reshape, dim=2)
-        y = x_reshape - s.unsqueeze(self.input_dimension).repeat(1, 1, self.input_dimension) / np.sqrt(self.input_dimension)
+        y = x_reshape - s.unsqueeze(2).repeat(1, 1, self.input_dimension) / np.sqrt(self.input_dimension)
 
         angle_tan = self.angle_tan + 1.19
         y_norm = torch.linalg.norm(y, self.input_dimension, dim=2)
