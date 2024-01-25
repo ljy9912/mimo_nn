@@ -124,7 +124,7 @@ class soc_3dim(nn.Module):
 
     def forward(self, x):
         if x.size(1) % self.input_dimension == 1:
-            x_reshape = torch.cat([torch.zeros(x.size(0), 1), x, torch.zeros(x.size(0), 1).cuda()], dim=1)
+            x_reshape = torch.cat([torch.zeros(x.size(0), 1).cuda(), x, torch.zeros(x.size(0), 1).cuda()], dim=1)
         elif x.size(1) % self.input_dimension == 2:
             x_reshape = torch.cat([x, torch.zeros(x.size(0), 1).cuda()], dim=1)
         else:
@@ -163,7 +163,7 @@ class soc_3dim_leaky(nn.Module):
 
     def forward(self, x):
         if x.size(1) % self.input_dimension == 1:
-            x_reshape = torch.cat([torch.zeros(x.size(0), 1), x, torch.zeros(x.size(0), 1).cuda()], dim=1)
+            x_reshape = torch.cat([torch.zeros(x.size(0), 1).cuda(), x, torch.zeros(x.size(0), 1).cuda()], dim=1)
         elif x.size(1) % self.input_dimension == 2:
             x_reshape = torch.cat([x, torch.zeros(x.size(0), 1).cuda()], dim=1)
         else:
