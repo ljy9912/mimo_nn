@@ -18,8 +18,8 @@ args = parser.parse_args()
 work_dir = args.work_dir
 reproduc(args.seed)
 
-if not os.path.exists(f"{work_dir}"):
-    os.makedirs(f"{work_dir}")
+if not os.path.exists(args.work_dir):
+    os.makedirs(args.work_dir)
 
 num_data = 50000
 batch_size = 128

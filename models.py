@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-from cone_projection import soc_resnet, soc_2dim_resnet, soc_2dim_leaky_resnet
+from cone_projection import soc, soc_leaky
 
 
 class BasicBlock(nn.Module):
@@ -42,14 +42,14 @@ class BasicBlock(nn.Module):
             self.act_fun1 = nn.PReLU()
             self.act_fun2 = nn.PReLU()
         elif act_fun == 'soc_2dim':
-            self.act_fun1 = soc_2dim_resnet(angle_tan=angle_tan)
-            self.act_fun2 = soc_2dim_resnet(angle_tan=angle_tan)
+            self.act_fun1 = soc(angle_tan=angle_tan, cone_dim=2)
+            self.act_fun2 = soc(angle_tan=angle_tan, cone_dim=2)
         elif act_fun == 'soc':
-            self.act_fun1 = soc_resnet(angle_tan=angle_tan)
-            self.act_fun2 = soc_resnet(angle_tan=angle_tan)
+            self.act_fun1 = soc(angle_tan=angle_tan, cone_dim=3)
+            self.act_fun2 = soc(angle_tan=angle_tan, cone_dim=3)
         elif act_fun == 'soc_2dim_leaky':
-            self.act_fun1 = soc_2dim_leaky_resnet(angle_tan=angle_tan)
-            self.act_fun2 = soc_2dim_leaky_resnet(angle_tan=angle_tan)
+            self.act_fun1 = soc_leaky(angle_tan=angle_tan, cone_dim=2)
+            self.act_fun2 = soc_leaky(angle_tan=angle_tan, cone_dim=2)
         else:
             raise ValueError('Activation not implemented! Please choose from ReLU, LeakyReLU, PReLU, soc_2dim, soc, soc_2dim_leaky!')
 
@@ -95,17 +95,17 @@ class Bottleneck(nn.Module):
             self.act_fun2 = nn.PReLU()
             self.act_fun3 = nn.PReLU()
         elif act_fun == 'soc':
-            self.act_fun1 = soc_resnet(angle_tan=angle_tan)
-            self.act_fun2 = soc_resnet(angle_tan=angle_tan)
-            self.act_fun3 = soc_resnet(angle_tan=angle_tan)
+            self.act_fun1 = soc(angle_tan=angle_tan, cone_dim=3)
+            self.act_fun2 = soc(angle_tan=angle_tan, cone_dim=3)
+            self.act_fun3 = soc(angle_tan=angle_tan, cone_dim=3)
         elif act_fun == 'soc_2dim':
-            self.act_fun1 = soc_2dim_resnet(angle_tan=angle_tan)
-            self.act_fun2 = soc_2dim_resnet(angle_tan=angle_tan)
-            self.act_fun3 = soc_2dim_resnet(angle_tan=angle_tan)
+            self.act_fun1 = soc(angle_tan=angle_tan, cone_dim=2)
+            self.act_fun2 = soc(angle_tan=angle_tan, cone_dim=2)
+            self.act_fun3 = soc(angle_tan=angle_tan, cone_dim=2)
         elif act_fun == 'soc_2dim_leaky':
-            self.act_fun1 = soc_2dim_leaky_resnet(angle_tan=angle_tan)
-            self.act_fun2 = soc_2dim_leaky_resnet(angle_tan=angle_tan)
-            self.act_fun3 = soc_2dim_leaky_resnet(angle_tan=angle_tan)
+            self.act_fun1 = soc_leaky(angle_tan=angle_tan, cone_dim=2)
+            self.act_fun2 = soc_leaky(angle_tan=angle_tan, cone_dim=2)
+            self.act_fun3 = soc_leaky(angle_tan=angle_tan, cone_dim=2)
 
     def forward(self, x):
         out = self.act_fun1(self.bn1(self.conv1(x)))
@@ -138,11 +138,11 @@ class ResNet(nn.Module):
         elif act_fun == 'PReLU':
             self.act_fun = nn.PReLU()
         elif act_fun == 'soc':
-            self.act_fun = soc_resnet(angle_tan=angle_tan)
+            self.act_fun = soc(angle_tan=angle_tan, cone_dim=3)
         elif act_fun == 'soc_2dim':
-            self.act_fun = soc_2dim_resnet(angle_tan=angle_tan)
+            self.act_fun = soc(angle_tan=angle_tan, cone_dim=2)
         elif act_fun == 'soc_2dim_leaky':
-            self.act_fun = soc_2dim_leaky_resnet(angle_tan=angle_tan)
+            self.act_fun = soc_leaky(angle_tan=angle_tan, cone_dim=2)
 
     def _make_layer(self, block, planes, num_blocks, stride):
         strides = [stride] + [1]*(num_blocks-1)

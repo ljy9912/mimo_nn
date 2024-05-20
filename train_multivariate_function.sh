@@ -2,7 +2,7 @@
 # Define an array of learning rates
 work_dir="./work_dirs"
 
-# Loop to run main.py 5 times with different seeds
+# Loop to run main.py 3 times with different seeds
 for dataset in "LeakyReLU" "soc_2dim"; do
     for seed in {1..3}; do
         command="python data_generation.py --fun \"${dataset}\" --seed ${seed}"

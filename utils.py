@@ -7,7 +7,7 @@ import random
 import numpy as np
 import torch.nn as nn
 import torch.nn.init as init
-from cone_projection import soc_2dim
+from cone_projection import soc_with_angle
 
 def reproduc(seed):
     """Make experiments reproducible
@@ -33,7 +33,7 @@ class mymodel(nn.Module):
         if act_fun == 'ReLU':
             self.act_fun = nn.ReLU()
         elif act_fun == 'soc_2dim':
-            self.act_fun = soc_2dim()
+            self.act_fun = soc_with_angle(cone_dim=2)
         elif act_fun == 'PReLU':
             self.act_fun = nn.PReLU()
         elif act_fun == 'LeakyReLU':

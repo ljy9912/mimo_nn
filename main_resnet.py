@@ -27,8 +27,8 @@ args = parser.parse_args()
 
 reproduc(args.seed)
 
-if not os.path.isdir(args.work_dir):
-    os.mkdir(args.work_dir)
+if not os.path.exists(args.work_dir):
+    os.makedirs(args.work_dir)
 if not os.path.isdir(args.work_dir + '/runs'):
     os.mkdir(args.work_dir + '/runs')
 writer = SummaryWriter(args.work_dir + '/runs')

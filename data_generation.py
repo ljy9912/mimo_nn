@@ -4,7 +4,7 @@ import argparse
 import numpy as np
 import torch.nn as nn
 from utils import reproduc
-from cone_projection import soc_2dim_with_angle
+from cone_projection import soc_with_angle
 
 parser = argparse.ArgumentParser(description='Dataset selection')
 parser.add_argument('--work_dir', type=str, default='./work_dirs/', help='Directory to save model weights and logs')
@@ -12,8 +12,8 @@ parser.add_argument('--fun', type=str, default='ReLU', help='Function to be appr
 parser.add_argument('--seed', type=int, default=0, help='Seed for the code')
 args = parser.parse_args()
 work_dir = args.work_dir
-if not os.path.isdir(work_dir):
-    os.mkdir(work_dir)
+if not os.path.exists(args.work_dir):
+    os.makedirs(args.work_dir)
 if not os.path.isdir(f'{work_dir}/data'):
     os.mkdir(f'{work_dir}/data')
 reproduc(args.seed)
@@ -33,7 +33,7 @@ if args.fun == 'ReLU':
 elif args.fun == 'LeakyReLU':
     fun = nn.LeakyReLU()
 elif args.fun == 'soc_2dim':
-    fun = soc_2dim_with_angle(angle)
+    fun = soc_with_angle(angle)
 else:
     raise ValueError("Function chosen not implemented! Please choose within ReLU, LeakyReLU and soc_2dim.")
 

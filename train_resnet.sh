@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Loop to run main.py 5 times with different seeds
+# Loop to run main.py 3 times with different seeds
 for act_fun in "ReLU" "PReLU" "LeakyReLU" "soc_2dim_leaky" "soc" "soc_2dim"; do
     for angle_tan in "0.84"; do
         for seed in {1..3}; do
